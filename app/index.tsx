@@ -22,8 +22,7 @@ export default function MainLogic() {
   const [graficoDistancia, setGraficoDistancia] = useState<{ mm: number; temperatura: number }[]>([]);
   const [graficoTempo, setGraficoTempo] = useState<{ temperatura: number; tempo: string }[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [exibirGrafico, setExibirGrafico] = useState<'distancia' | 'tempo' | ''>(''); 
-  
+  const [exibirGrafico, setExibirGrafico] = useState<'distancia' | 'tempo' | ''>('');  
 
   const handleInputChange = (key: string, value: string) => {
     setInputs({ ...inputs, [key]: value });
@@ -107,14 +106,13 @@ export default function MainLogic() {
             style={chartStyle}
             />
         </ScrollView>
-
-          <ScrollView style={styles.resultContainer}>
+          <View style={styles.resultContainer}>
             {graficoDistancia.map((ciclo, index) => (
               <Text key={index} style={styles.resultText}>
                 {ciclo.mm} mm: {ciclo.temperatura.toFixed(0)}°C
               </Text>
             ))}
-          </ScrollView>
+          </View>
         </ScrollView>
       );
     } else if (exibirGrafico === 'tempo') {
@@ -134,70 +132,67 @@ export default function MainLogic() {
             style={chartStyle}
           />
         </ScrollView>
-        <ScrollView style={styles.resultContainer}>
+        <View style={styles.resultContainer}>
           {graficoTempo.map((item, index) => (
             <Text key={index} style={styles.resultText}>
               {item.tempo} s: {item.temperatura}°C
             </Text>
           ))}
-        </ScrollView>
+        </View>
       </ScrollView>
       );
     }
     return null;
   };
 
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <InputSection inputs={inputs} handleInputChange={handleInputChange} />
-
-      <View style={styles.containerButton}>
-        <TouchableOpacity style={styles.button} onPress={calcular}>
-          <Text style={styles.buttonText}>Calcular</Text>
+return (
+  <ScrollView contentContainerStyle={styles.container}>
+    <InputSection inputs={inputs} handleInputChange={handleInputChange}/>
+    <View style={styles.containerButton}>
+      <TouchableOpacity style={styles.button} onPress={calcular}>
+        <Text style={styles.buttonText}>Calcular</Text>
         </TouchableOpacity>
+    </View>
+    <Modal visible={modalVisible} transparent={true} animationType="slide">
+  <View style={styles.modalContainer}>
+    <ScrollView contentContainerStyle={styles.modalContent}>
+      <Text style={styles.resultado}>{resultado}</Text>
+      {renderGraphAndText()}
+      <View style={styles.containerButton}>
+        {exibirGrafico !== 'distancia' && (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setExibirGrafico('distancia');
+              setResultado('');
+            }}>
+            <Text style={styles.buttonText}>Mostrar Temperatura x Distância</Text>
+          </TouchableOpacity>
+        )}
+        {exibirGrafico !== 'tempo' && (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setExibirGrafico('tempo');
+              setResultado('');
+            }}>
+            <Text style={styles.buttonText}>Mostrar Temperatura x Tempo</Text>
+          </TouchableOpacity>
+        )}
       </View>
-
-      <Modal visible={modalVisible} transparent={true} animationType="slide">
-        <View style={styles.modalContainer}>
-          <ScrollView contentContainerStyle={styles.modalContent}>
-            <Text style={styles.resultado}>{resultado}</Text>
-
-            {renderGraphAndText()}
-
-            <View style={styles.containerButton}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  setExibirGrafico('distancia');
-                  setResultado('');
-                }}
-              >
-                <Text style={styles.buttonText}>Mostrar Temperatura x Distância</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => {
-                  setExibirGrafico('tempo');
-                  setResultado('');
-                }}
-              >
-                <Text style={styles.buttonText}>Mostrar Temperatura x Tempo</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => {
-                  setModalVisible(false);
-                  setExibirGrafico('');
-                  setResultado('');
-                }}
-              >
-                <Text style={styles.buttonText}>Fechar</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </View>
-      </Modal>
+      <TouchableOpacity
+        style={styles.closeButton}
+        onPress={() => {
+          setModalVisible(false);
+          setExibirGrafico('');
+          setResultado('');
+        }}>
+        <Text style={styles.buttonText}>Fechar</Text>
+      </TouchableOpacity>
     </ScrollView>
+  </View>
+</Modal>
+</ScrollView>
   );
 }
 
@@ -219,6 +214,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 10,
     backgroundColor: '#797979',
+  
   },
   containerButton: {
     flex: 1,
@@ -231,12 +227,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 5,
   },
-  closeButton: {
-    backgroundColor: '#FF0000',
-    padding: 10,
-    borderRadius: 5,
-    margin: 5,
-  },
   buttonText: {
     color: '#fff',
     fontSize: 12,
@@ -245,21 +235,29 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center', 
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    
   },
   modalContent: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 10,
+    padding: 20, 
+    width: '90%',
     alignItems: 'center',
-    width: 'auto',
+    alignSelf: 'center',
+  },
+  closeButton: {
+    backgroundColor: '#FF0000',
+    padding: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+    marginTop: 10,
   },
   resultado: {
     fontSize: 12,
-    marginBottom: 10,
+    marginBottom: 5,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   label: {
     fontSize: 15,
