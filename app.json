@@ -5,12 +5,23 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "myapp",
+    "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
     },
+    
     "android": {
-      "package": "com.matheu.sfelipe.ciclo_termico"
+      "package": "com.matheu.sfelipe.ciclo_termico",
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain", 
+      "backgroundColor": "#ffffff" 
     },
     "web": {
       "bundler": "metro",

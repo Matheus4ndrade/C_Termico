@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import InputSection from './inputSection';
+import { LineChart } from 'react-native-chart-kit';
 
 export default function MainLogic() {
   const [inputs, setInputs] = useState({
@@ -22,7 +22,8 @@ export default function MainLogic() {
   const [graficoDistancia, setGraficoDistancia] = useState<{ mm: number; temperatura: number }[]>([]);
   const [graficoTempo, setGraficoTempo] = useState<{ temperatura: number; tempo: string }[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [exibirGrafico, setExibirGrafico] = useState<'distancia' | 'tempo' | ''>('');  
+  const chartRef = useRef(null);
+  const [exibirGrafico, setExibirGrafico] = useState<'distancia' | 'tempo' | ''>('');
 
   const handleInputChange = (key: string, value: string) => {
     setInputs({ ...inputs, [key]: value });
@@ -44,6 +45,11 @@ export default function MainLogic() {
     const t = parseInputValues(inputs.espessuraChapa);
     const d = parseInputValues(inputs.distancia);
     const Tm = parseInputValues(inputs.temperaturaFusao);
+    const Ht = (I * V * n * 60) / velocidadeSoldagem;
+    const resulUm = (1 / (Tp - To));
+    const resulDois = ((4.13 * (p * Cp / 1000000000) * t * 1) / Ht);
+    const resulTres = (1 / (Tm - To));
+    const resultadoAdams = ((resulUm - resulTres) / resulDois);
 
     if (d > 20) {
       alert('O valor de "Distância em mm" não pode ser maior que 20.');
@@ -55,19 +61,11 @@ export default function MainLogic() {
       return;
     }
 
-    const Ht = (I * V * n * 60) / velocidadeSoldagem;
-    const resulUm = (1 / (Tp - To));
-    const resulDois = ((4.13 * (p * Cp / 1000000000) * t * 1) / Ht);
-    const resulTres = (1 / (Tm - To));
-    const resultadoAdams = ((resulUm - resulTres) / resulDois);
-
     const ciclos = [];
     for (let i = 0; i <= d; i++) {
       const Tp_mm = (1 / (((4.13 * (p * Cp / 1000000000) * t * i / Ht)) + resulTres)) + To;
       ciclos.push({ mm: i, temperatura: Tp_mm });
     }
-
-    setGraficoDistancia(ciclos);
 
     const temperaturaTempo = ciclos.map((ciclo, index) => {
       const VelSolTem = (60 / velocidadeSoldagem) * ciclo.mm;
@@ -77,15 +75,16 @@ export default function MainLogic() {
       };
     });
 
-    setGraficoTempo(temperaturaTempo);
-
-    const formattedResult = `
-    Valor correspondente para Y em Tp = ${Tp}° é: ${resultadoAdams.toFixed(2)}
-    Heat Input (Ht) = ${Ht.toFixed(0)}
-    `;
+    const formattedResult = `Valor de Y em ${Tp}° é:
+    ${resultadoAdams.toFixed(2)} mm
+    Heat Input (Ht):
+    ${Ht.toFixed(0)} J/mm`;
 
     setResultado(formattedResult);
-    setModalVisible(true);
+    setModalVisible(true); 
+    setGraficoDistancia(ciclos);
+    setGraficoTempo(temperaturaTempo);
+
   };
 
   const renderGraphAndText = () => {
@@ -94,6 +93,7 @@ export default function MainLogic() {
         <ScrollView>
           <Text style={styles.label}>Resultado Temperatura x Distância (mm):</Text>
           <ScrollView horizontal>
+          <View ref={chartRef}>
             <LineChart
             data={{
               labels: graficoDistancia.map(ciclo => `${ciclo.mm}`),
@@ -105,6 +105,7 @@ export default function MainLogic() {
             chartConfig={chartConfig}
             style={chartStyle}
             />
+            </View>
         </ScrollView>
           <View style={styles.resultContainer}>
             {graficoDistancia.map((ciclo, index) => (
@@ -118,7 +119,7 @@ export default function MainLogic() {
     } else if (exibirGrafico === 'tempo') {
       return (
       <ScrollView>
-        <Text style={styles.label}>Resultado Temperatura x Tempo (segundos):</Text>
+        <Text style={styles.label}>Resultado Temperatura x Tempo (s):</Text>
         <ScrollView horizontal>
           <LineChart
             data={{
@@ -143,12 +144,12 @@ export default function MainLogic() {
       );
     }
     return null;
-  };
+  };  
 
 return (
   <ScrollView contentContainerStyle={styles.container}>
     <InputSection inputs={inputs} handleInputChange={handleInputChange}/>
-    <View style={styles.containerButton}>
+    <View style={styles.containerButtonCal}>
       <TouchableOpacity style={styles.button} onPress={calcular}>
         <Text style={styles.buttonText}>Calcular</Text>
         </TouchableOpacity>
@@ -158,7 +159,7 @@ return (
     <ScrollView contentContainerStyle={styles.modalContent}>
       <Text style={styles.resultado}>{resultado}</Text>
       {renderGraphAndText()}
-      <View style={styles.containerButton}>
+      <View>
         {exibirGrafico !== 'distancia' && (
           <TouchableOpacity
             style={styles.button}
@@ -195,82 +196,82 @@ return (
 </ScrollView>
   );
 }
-
-const chartConfig = {
-  backgroundColor: '#ffffff',
-  backgroundGradientFrom: '#ffffff',
-  backgroundGradientTo: '#ffffff',
-  decimalPlaces: 0,
-  color: (opacity = 1) => `#008000`,
-  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-};
-
-const chartStyle = {
-  borderRadius: 16,
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 10,
-    backgroundColor: '#797979',
+  const chartStyle = {
+    borderRadius: 16,
+  };
   
-  },
-  containerButton: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 10,
-  },
-  button: {
-    backgroundColor: '#008000',
-    padding: 10,
-    borderRadius: 5,
-    margin: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center', 
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20, 
-    width: '90%',
-    alignItems: 'center',
-    alignSelf: 'center',
-  },
-  closeButton: {
-    backgroundColor: '#FF0000',
-    padding: 10,
-    borderRadius: 5,
-    alignSelf: 'center',
-    marginTop: 10,
-  },
-  resultado: {
-    fontSize: 12,
-    marginBottom: 5,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  label: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  resultContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  resultText: {
-    flexBasis: '50%',
-    fontSize: 12,
-    textAlign: 'center', 
-    paddingVertical: 2, 
-  },
-});
+  const chartConfig = {
+    backgroundColor: '#ffffff',
+    backgroundGradientFrom: '#ffffff',
+    backgroundGradientTo: '#ffffff',
+    decimalPlaces: 0,
+    color: (opacity = 1) => `#008000`,
+    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+  };
+  
+  const styles = StyleSheet.create({
+    container: {
+      flexGrow: 1,
+      padding: 5,
+      backgroundColor: '#797979',
+    },
+    button: {
+      backgroundColor: '#008000',
+      padding: 10,
+      margin: 10,
+      borderRadius: 5,
+      flex: 1,
+    },
+    containerButtonCal:{
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: '#fff',
+      fontSize: 12,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center', 
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      flexDirection: 'column',
+    },
+    modalContent: {
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      padding: 5, 
+      width: '90%',
+      alignItems: 'center',
+      alignSelf: 'center',
+      flexDirection: 'column',
+    },
+    closeButton: {
+      backgroundColor: '#FF0000',
+      padding: 10,
+      borderRadius: 5,
+      alignSelf: 'center',
+    },
+    resultado: {
+      fontSize: 13,
+      marginBottom: 5,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    label: {
+      fontSize: 15,
+      fontWeight: 'bold',
+    },
+    resultContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
+    resultText: {
+      flexBasis: '50%',
+      fontSize: 13,
+      textAlign: 'center', 
+      paddingVertical: 2, 
+    },
+  });

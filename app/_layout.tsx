@@ -11,7 +11,7 @@ export default function RootLayout() {
         headerTitleAlign: 'center', 
       }}
     >
-      <Stack.Screen name="index" options={{ title: 'Ciclo Térmico' }} />
+      <Stack.Screen name="index" options={{ title: 'CICLO TÉRMICO' }} />
       <Stack.Screen name="+not-found" />
     </Stack>
   );
