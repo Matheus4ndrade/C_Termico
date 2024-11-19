@@ -208,51 +208,55 @@ return (
     color: (opacity = 1) => `#008000`,
     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   };
+
   
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
-      padding: 5,
+      padding: 10,
       backgroundColor: '#797979',
+    },
+    containerButton: {
+      flex: 1,
+      alignItems: 'center',
+      padding: 10,
+    },
+    containerButtonCal: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     button: {
       backgroundColor: '#008000',
-      padding: 10,
-      margin: 10,
+      padding: 13,
       borderRadius: 5,
-      flex: 1,
-    },
-    containerButtonCal:{
-      justifyContent: 'center',
-      alignItems: 'center',
+      margin: 5,
     },
     buttonText: {
       color: '#fff',
       fontSize: 12,
       fontWeight: 'bold',
-      textAlign: 'center',
     },
     modalContainer: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center', 
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      flexDirection: 'column',
     },
     modalContent: {
       backgroundColor: '#fff',
       borderRadius: 10,
-      padding: 5, 
+      padding: 20, 
       width: '90%',
       alignItems: 'center',
       alignSelf: 'center',
-      flexDirection: 'column',
     },
     closeButton: {
       backgroundColor: '#FF0000',
       padding: 10,
       borderRadius: 5,
       alignSelf: 'center',
+      marginTop: 13,
     },
     resultado: {
       fontSize: 13,
