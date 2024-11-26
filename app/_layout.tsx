@@ -1,4 +1,5 @@
 import { Stack } from 'expo-router';
+import AboutButton from './components/AboutButton';
 
 export default function RootLayout() {
   return (
@@ -8,7 +9,8 @@ export default function RootLayout() {
           backgroundColor: '#4f4f4f',
         },
         headerTintColor: '#c6c6c6',
-        headerTitleAlign: 'center', 
+        headerTitleAlign: 'center',
+        headerRight: () => <AboutButton />, 
       }}
     >
       <Stack.Screen name="index" options={{ title: 'CICLO TÉRMICO' }} />

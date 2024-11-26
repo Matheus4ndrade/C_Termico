@@ -209,7 +209,6 @@ return (
     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   };
 
-  
   const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
