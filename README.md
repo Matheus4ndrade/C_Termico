@@ -1,8 +1,6 @@
 # Aplicativo Ciclo Termico e Heat Input
 Este projeto foi desenvolvido como parte do Trabalho de Graduação 
-(TG) em Mêcanica: Processos de Soldagem. Ele combina um aplicativo móvel (disponível em formato APK) e um software complementar (veja outro repositório).
-   
-O objetivo principal é fornecer uma ferramenta prática e acessível para cálculos térmicos e de parâmetros essenciais no processo de soldagem, utilizando equações específicas da área.
+(TG) em Mêcanica: Processos de Soldagem. Ele combina um software (disponível [neste repositório](https://github.com/Matheus4ndrade/cTermico)). O objetivo principal é fornecer uma ferramenta prática e acessível para cálculos térmicos e de parâmetros essenciais no processo de soldagem, utilizando equações específicas da área.
 
 O aplicativo foi projetado para:
    * Realizar cálculos baseados em parâmetros como densidade, calor específico, velocidade de soldagem e outras variáveis.
