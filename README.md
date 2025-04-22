@@ -61,7 +61,7 @@ Essas são algumas das equações que são aplicadas para prever a distribuiçã
 
 ## Como Baixar o APK
 
-O aplicativo está disponível para download no seguinte link: -------
+O aplicativo está disponível para download no seguinte link: https://drillweld.netlify.app/
 
 Após o download, instale o arquivo em seu dispositivo Android. Certifique-se de ativar a instalação de fontes desconhecidas nas configurações do dispositivo, se necessário.
 
