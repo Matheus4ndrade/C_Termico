@@ -1,72 +1,92 @@
-# Aplicativo Ciclo Termico e Heat Input
-Este projeto foi desenvolvido como parte do Trabalho de Graduação 
-(TG) em Mêcanica: Processos de Soldagem. Ele combina um software (disponível [neste repositório](https://github.com/Matheus4ndrade/cTermico)). O objetivo principal é fornecer uma ferramenta prática e acessível para cálculos térmicos e de parâmetros essenciais no processo de soldagem, utilizando equações específicas da área.
+# Aplicativo Ciclo Térmico e Heat Input
+Este aplicativo foi desenvolvido como parte do **Trabalho de Graduação (TG) em Mecânica – Processos de Soldagem**, com o objetivo de apoiar a análise térmica aplicada à soldagem por meio de cálculos automatizados e visualização gráfica dos principais parâmetros do processo.
 
+O projeto está diretamente relacionado ao software desktop de Ciclo Térmico, disponível neste repositório:  
+🔗 https://github.com/Matheus4ndrade/cTermico  
+
+📄 **Trabalho de Graduação (TG):**  
+http://ric-cps.eastus2.cloudapp.azure.com/handle/123456789/33293  
+
+🌐 **Site do projeto / Download:**  
+https://drillweld.netlify.app/
+
+---
+
+## Objetivo do Aplicativo
 O aplicativo foi projetado para:
-   * Realizar cálculos baseados em parâmetros como densidade, calor específico, velocidade de soldagem e outras variáveis.
 
-   * Gerar gráficos de temperatura por distância e temperatura por tempo, essenciais para a análise do perfil térmico no material.
-   
-   * Auxiliar profissionais e estudantes da área de soldagem no planejamento e execução de processos mais eficientes.
+- Realizar cálculos térmicos baseados em parâmetros do processo de soldagem  
+- Gerar gráficos fundamentais para a avaliação do perfil térmico do material  
+- Auxiliar estudantes e profissionais no planejamento e ajuste de processos de soldagem  
+
+---
 
 ## Importância para a Soldagem
-Nos processos de soldagem, o controle térmico é crucial para garantir a qualidade e resistência das juntas soldadas. Este aplicativo utiliza equações específicas que permitem:
+Nos processos de soldagem, o controle térmico é essencial para garantir a qualidade, integridade e desempenho mecânico das juntas soldadas.
 
-   * Determinar a distribuição de temperatura ao longo do material
-   
-   * Calcular o Heat Input (Ht), um parâmetro essencial para prever a microestrutura final da solda.
-
-   * Auxiliar na análise de viabilidade do processo com base nas propriedades do material e condições de operação.
-
-A ferramenta torna mais prática a análise de variáveis que tradicionalmente demandam cálculos complexos, proporcionando uma interface amigável e intuitiva.
+O aplicativo permite:
+- Determinar a **distribuição de temperatura** ao longo do material  
+- Calcular o **Heat Input (Ht)**, parâmetro fundamental para a previsão da microestrutura final  
+- Apoiar a análise de viabilidade do processo considerando propriedades do material e condições operacionais  
+---
 
 ## Equações Utilizadas
 
-As equações implementadas no aplicativo incluem:
-   
-   ### Heat Input (Ht):
-   ![Fórmula de Heat Input](/assets/images/imagesForDoc/heatInput.png)
+As principais equações implementadas no aplicativo incluem:
 
-   Onde:
-   * I: Corrente (A)
-   * 𝑉: Tensão (V)
-   * 𝑛: Eficiência
-   * 𝑣: Velocidade de soldagem (mm/min)
+### Heat Input (Ht)
 
+![Fórmula de Heat Input](/assets/images/imagesForDoc/heatInput.png)
 
-### Cálculo de temperatura ao longo da distância (mm):
-   ![Fórmula de Heat Input](/assets/images/imagesForDoc/Eadams.png)
+Onde:
+- **I**: Corrente (A)  
+- **V**: Tensão (V)  
+- **η**: Eficiência  
+- **v**: Velocidade de soldagem (mm/min)  
 
-   Onde:
-   * ρ: Densidade
-   * 𝐶𝑝: Calor específico
-   * 𝑡: Espessura da chapa
-   * 𝑇𝑚: Temperatura de fusão
-   * 𝑇0: Temperatura inicial
+---
 
-Essas são algumas das equações que são aplicadas para prever a distribuição térmica e otimizar os parâmetros de soldagem.
+### Cálculo da temperatura ao longo da distância (mm)
 
+![Equação de Adams](/assets/images/imagesForDoc/Eadams.png)
+
+Onde:
+- **ρ**: Densidade  
+- **Cp**: Calor específico  
+- **t**: Espessura da chapa  
+- **Tm**: Temperatura de fusão  
+- **T₀**: Temperatura inicial  
+
+Essas equações permitem prever a distribuição térmica e otimizar os parâmetros de soldagem de forma fundamentada.
+
+---
 
 ## Funcionalidades
 
-- Entrada de dados: insira os parâmetros do processo.
-
-- Cálculo automático dos valores necessários.
-
+- Inserção dos parâmetros do processo de soldagem  
+- Cálculo automático das grandezas térmicas  
 - Geração de gráficos:
-   - Temperatura x Distância
-   - Temperatura x Tempo
+  - Temperatura × Distância  
+  - Temperatura × Tempo  
+- Interface intuitiva e acessível  
 
-- Interface intuitiva para usuários de diversos níveis de experiência.
+---
 
-## Como Baixar o APK
+## Download do APK
+O aplicativo pode ser baixado diretamente pelo site do projeto:
 
-O aplicativo está disponível para download no seguinte link: https://drillweld.netlify.app/
+🌐 https://drillweld.netlify.app/
 
-Após o download, instale o arquivo em seu dispositivo Android. Certifique-se de ativar a instalação de fontes desconhecidas nas configurações do dispositivo, se necessário.
+Após o download, instale o APK no dispositivo Android.  
+Caso necessário, habilite a opção de instalação de fontes desconhecidas nas configurações do sistema.
 
-## Como Contribuir
-Contribuições são bem-vindas! Caso tenha sugestões ou melhorias, fique à vontade para abrir uma issue ou enviar um pull request.
+---
+
+## Contribuições
+Sugestões, melhorias e correções são bem-vindas. Sinta-se à vontade para abrir uma *issue* ou enviar um *pull request*.
+
+---
 
 ## Autor
-Este projeto foi desenvolvido por Matheus Felipe Andrade Gomes como parte do Trabalho de Graduação em Mecânica: Processos de Soldagem.
+**Matheus Felipe Andrade Gomes**  
+Trabalho de Graduação em Mecânica – Processos de Soldagem
