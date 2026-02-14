@@ -2,12 +2,12 @@
 Este aplicativo foi desenvolvido como parte do **Trabalho de Graduação (TG) em Mecânica – Processos de Soldagem**, com o objetivo de apoiar a análise térmica aplicada à soldagem por meio de cálculos automatizados e visualização gráfica dos principais parâmetros do processo.
 
 O projeto está diretamente relacionado ao software desktop de Ciclo Térmico, disponível neste repositório:  
-🔗 https://github.com/Matheus4ndrade/cTermico  
+https://github.com/Matheus4ndrade/cTermico  
 
-📄 **Trabalho de Graduação (TG):**  
+**Trabalho de Graduação (TG):**  
 http://ric-cps.eastus2.cloudapp.azure.com/handle/123456789/33293  
 
-🌐 **Site do projeto / Download:**  
+**Site do projeto / Download:**  
 https://drillweld.netlify.app/
 
 ---
